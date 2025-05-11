@@ -9,7 +9,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = formType === "signup" ? "/api/signup" : "/api/login"; // login not yet created
+    const endpoint =
+      formType === "signup"
+        ? "https://yumroll.vercel.app/api/server/signup"
+        : "https://yumroll.vercel.app/api/server/login";
+
     try {
       const res = await fetch(endpoint, {
         method: "POST",
