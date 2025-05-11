@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Login from "./components/Login/Login";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("/api/app")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((err) => setMessage("Error fetching"));
-  }, []);
-
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Frontend + Backend</h1>
-      <p>Response: {message}</p>
+    <div>
+      <h1 style={{ textAlign: "center" }}>Welcome to YumRoll</h1>
+      <Login />
     </div>
   );
 }
