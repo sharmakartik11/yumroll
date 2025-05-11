@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const serverless = require("serverless-http");
 const jwt = require("jsonwebtoken");
 const app = express();
 const PORT = 5050;
@@ -66,3 +67,5 @@ app.post("/login", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+module.exports.handler = serverless(app);
