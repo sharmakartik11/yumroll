@@ -9,7 +9,6 @@ const Login = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState("");
   const [responseMsg, setResponseMsg] = useState("");
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint =
@@ -29,9 +28,9 @@ const Login = ({ onLoginSuccess }) => {
       setResponseMsg(data.message || "Success");
       if (formType === "signin") {
         localStorage.setItem("auth", "true");
-        onLoginSuccess();  // Store auth status after successful login
-        navigate("/dashboard");  // Navigate to the dashboard
-        console.log("Navigating to dashboard")
+        onLoginSuccess(); // Store auth status after successful login
+        navigate("/dashboard"); // Navigate to the dashboard
+        console.log("Navigating to dashboard");
       }
     } catch (err) {
       setResponseMsg(err.message);
