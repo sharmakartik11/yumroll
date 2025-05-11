@@ -17,6 +17,8 @@ app.use(express.json());
 app.get("/api/app", (req, res) => {
   res.status(200).json({ message: "Success from backend!" });
 });
+
+//signup API
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
 
@@ -31,6 +33,30 @@ app.post("/signup", async (req, res) => {
     await user.save();
 
     res.status(201).json({ msg: "User registered successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+//login API
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find user in db
+    const user = await User.findById(username);
+    if (!user) {
+      return res.status(400).json({ msg: "Invalid username or password" });
+    }
+
+    // Compare hashed passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Invalid username or password" });
+    }
+
+    res.status(200).json({ msg: "Login successful" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
