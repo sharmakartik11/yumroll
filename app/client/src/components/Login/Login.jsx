@@ -13,8 +13,8 @@ const Login = ({ onLoginSuccess }) => {
     e.preventDefault();
     const endpoint =
       formType === "signup"
-        ? "https://yumroll.vercel.app/api/server/signup"
-        : "https://yumroll.vercel.app/api/server/login";
+        ? "https://yumroll.vercel.app/api/index/signup"
+        : "https://yumroll.vercel.app/api/index/login";
 
     try {
       const res = await fetch(endpoint, {
