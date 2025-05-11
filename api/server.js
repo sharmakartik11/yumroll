@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const app = express();
 const PORT = 5050;
-const { connectDB, client } = require("./db");
+const connectDB = require("./db");
+const User = require("./models/User");
 
 //connect to database
 connectDB();
@@ -14,31 +17,23 @@ app.use(express.json());
 app.get("/api/app", (req, res) => {
   res.status(200).json({ message: "Success from backend!" });
 });
-
-app.post("/api/register", async (req, res) => {
+app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ error: "Username and password are required" });
-  }
-
   try {
-    const db = client.db("yumroll"); // Replace with your actual DB name
-    const users = db.collection("users");
+    let user = await User.findById(username);
+    if (user) return res.status(400).json({ msg: "User already exists" });
 
-    const result = await users.insertOne({ _id: username, password });
-    res
-      .status(200)
-      .json({ message: "User registered", username: result.insertedId });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    user = new User({ _id: username, password: hashedPassword });
+    await user.save();
+
+    res.status(201).json({ msg: "User registered successfully" });
   } catch (err) {
-    if (err.code === 11000) {
-      res.status(409).json({ error: "Username already exists" });
-    } else {
-      console.error("Insert failed:", err);
-      res.status(500).json({ error: "Internal server error" });
-    }
+    console.error(err.message);
+    res.status(500).send("Server error");
   }
 });
 

@@ -1,26 +1,19 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const uri =
-  "mongodb+srv://admin:letsyumrollit@yumroll.5utjiyy.mongodb.net/?retryWrites=true&w=majority&appName=YumRoll";
+const uri = process.env.MONGO_URI;
 
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-async function connectDB() {
+const connectDB = async () => {
   try {
-    await client.connect();
-    console.log("Connected to MongoDB");
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected");
   } catch (err) {
-    console.error("MongoDB connection error:", err);
+    console.error(err.message);
+    process.exit(1);
   }
-}
-
-module.exports = {
-  connectDB,
-  client,
 };
+
+module.exports = connectDB;
