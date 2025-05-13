@@ -9,7 +9,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = formType === "signup" ? "/signup" : "/login"; // login not yet created
+    const API_BASE_URL = "yumroll-api.vercel.app/api"; // Replace with actual backend Vercel URL
+    const endpoint =
+      formType === "signup"
+        ? `${API_BASE_URL}/signup`
+        : `${API_BASE_URL}/login`;
+
     try {
       const res = await fetch(endpoint, {
         method: "POST",
