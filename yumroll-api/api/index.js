@@ -7,7 +7,14 @@ const connectDB = require("../db");
 const User = require("../models/User");
 
 const app = express();
-connectDB();
+
+(async () => {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error("Fatal DB connection error");
+  }
+})();
 
 app.use(cors());
 app.use(express.json());
@@ -53,4 +60,4 @@ app.post("/login", async (req, res) => {
   }
 });
 
-module.exports.handler = serverless(app);
+module.exports = serverless(app);
