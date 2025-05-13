@@ -8,13 +8,14 @@ const User = require("../models/User");
 
 const app = express();
 
-(async () => {
+app.use(async (req, res, next) => {
   try {
     await connectDB();
+    next();
   } catch (err) {
-    console.error("Fatal DB connection error");
+    res.status(500).json({ error: "Failed to connect to database" });
   }
-})();
+});
 
 app.use(cors());
 app.use(express.json());
