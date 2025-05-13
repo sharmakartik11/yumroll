@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const Login = ({ onLoginSuccess }) => {
-  const navigate = useNavigate();
+const Login = () => {
   const [formType, setFormType] = useState("signup"); // "signup" or "signin"
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,11 +9,7 @@ const Login = ({ onLoginSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint =
-      formType === "signup"
-        ? "https://yumroll.vercel.app/api/index/signup"
-        : "https://yumroll.vercel.app/api/index/login";
-
+    const endpoint = formType === "signup" ? "/signup" : "/login"; // login not yet created
     try {
       const res = await fetch(endpoint, {
         method: "POST",
@@ -26,12 +20,6 @@ const Login = ({ onLoginSuccess }) => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
       setResponseMsg(data.message || "Success");
-      if (formType === "signin") {
-        localStorage.setItem("auth", "true");
-        onLoginSuccess(); // Store auth status after successful login
-        navigate("/dashboard"); // Navigate to the dashboard
-        console.log("Navigating to dashboard");
-      }
     } catch (err) {
       setResponseMsg(err.message);
     }
