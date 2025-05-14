@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Login.css";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
   const [formType, setFormType] = useState("signup"); // "signup" or "signin"
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [responseMsg, setResponseMsg] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +28,13 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
       setResponseMsg(data.message || "Success");
+
+      if (formType === "signin") {
+        // Save authentication status and navigate to dashboard
+        localStorage.setItem("auth", "true");
+        onLoginSuccess(); // Notify parent component about successful login
+        navigate("/dashboard"); // Redirect to dashboard
+      }
     } catch (err) {
       setResponseMsg(err.message);
     }
