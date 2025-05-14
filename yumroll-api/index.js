@@ -5,6 +5,7 @@ const app = express();
 const PORT = 5050;
 
 app.use(cors());
+app.use(express.json()); // Add this middleware to parse JSON payloads
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Yumroll API!');
@@ -16,7 +17,7 @@ app.listen(PORT, () => {
 }
 );
 
-app.get('/api/signup', (req, res) => {
+app.post('/api/signup', (req, res) => {
   const { username, password } = req.body;
 
   // Simulate a successful signup
@@ -27,7 +28,7 @@ app.get('/api/signup', (req, res) => {
   }
 }
 );
-app.get('/api/login', (req, res) => {
+app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
   // Simulate a successful login
