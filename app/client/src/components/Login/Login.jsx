@@ -12,11 +12,11 @@ const Login = () => {
     const API_BASE_URL = "yumroll-api.vercel.app/api"; // Replace with actual backend Vercel URL
     const endpoint =
       formType === "signup"
-        ? `${API_BASE_URL}/signup`
-        : `${API_BASE_URL}/login`;
+        ? `signup`
+        : `login`;
     console.log("Endpoint:", endpoint);
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(`https://yumroll-api.vercel.app/api/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
