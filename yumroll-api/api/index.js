@@ -3,7 +3,7 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const serverless = require("serverless-http");
 const jwt = require("jsonwebtoken");
-const connectDB = require("../db");
+const connectDB = require("./mongo");
 const User = require("../models/User");
 
 const app = express();
