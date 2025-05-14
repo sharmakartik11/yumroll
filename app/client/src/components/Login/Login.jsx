@@ -14,7 +14,7 @@ const Login = () => {
       formType === "signup"
         ? `${API_BASE_URL}/signup`
         : `${API_BASE_URL}/login`;
-
+    console.log("Endpoint:", endpoint);
     try {
       const res = await fetch(endpoint, {
         method: "POST",
