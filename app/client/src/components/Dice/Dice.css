@@ -25,6 +25,7 @@
     font-weight: bold;
     background: #f3f3f3;
     border: 2px solid #ccc;
+    border-radius: 15px;
   }
   
   .face1  { transform: rotateY(0deg) translateZ(100px); }

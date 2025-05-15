@@ -51,7 +51,7 @@ const Dice = () => {
           ))}
         </div>
       </div>
-      <button onClick={rollDice}>Yumroll it 🎲</button>
+      <button onClick={rollDice}>Yumroll it! 🎲</button>
     </div>
   );
 };
