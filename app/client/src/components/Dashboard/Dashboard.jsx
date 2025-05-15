@@ -1,10 +1,11 @@
 import React from "react";
+import Dice from "../Dice/Dice";
 
 const Dashboard = ({ onLogout }) => {
   return (
     <div style={{ padding: 30 }}>
       <h1>Welcome to the Dashboard!</h1>
-      <p>You are logged in.</p>
+      <Dice />
       <button onClick={onLogout}>Logout</button>
     </div>
   );
