@@ -17,7 +17,7 @@ const PORT = 5050;
 })();
 
 app.use(cors());
-app.use(express.json()); // Add this middleware to parse JSON payloads
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Yumroll API!");
@@ -50,13 +50,23 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
-  // Simulate a successful login
-  if (username === "testuser" && password === "password") {
-    res.status(200).json({ message: "Login successful!" });
-  } else {
-    res.status(401).json({ error: "Invalid credentials" });
+  try {
+    const user = await User.findById(username); // _id is username
+    if (!user) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
+  } catch (err) {
+    console.error("Login error:", err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
