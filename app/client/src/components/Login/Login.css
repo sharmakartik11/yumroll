@@ -1,5 +1,5 @@
 .login-container {
-    background: #f4f6f8;
+    background: #f4f6f8; /* Match Dashboard page background */
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -18,8 +18,9 @@
   .login-heading {
     margin-bottom: 25px;
     text-align: center;
-    font-size: 24px;
-    color: #333;
+    font-size: 2.5rem; /* Match Dashboard heading size */
+    font-weight: bold;
+    color: #333; /* Match Dashboard heading color */
   }
   
   .login-label {
@@ -42,13 +43,18 @@
   .login-button {
     width: 100%;
     padding: 10px;
-    background: #007bff;
+    background: #007bff; /* Match Dashboard button background */
     color: #fff;
     border: none;
     border-radius: 5px;
     font-weight: 600;
     font-size: 15px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
   }
   
   .login-message {

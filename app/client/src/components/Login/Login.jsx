@@ -9,14 +9,10 @@ const Login = ({ onLoginSuccess }) => {
   const [responseMsg, setResponseMsg] = useState("");
   const navigate = useNavigate(); // Initialize useNavigate
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const API_BASE_URL = "yumroll-api.vercel.app/api"; // Replace with actual backend Vercel URL
-    const endpoint =
-      formType === "signup"
-        ? `signup`
-        : `login`;
+    const endpoint = formType === "signup" ? `signup` : `login`;
     console.log("Endpoint:", endpoint);
     try {
       const res = await fetch(`https://yumroll-api.vercel.app/api/${endpoint}`, {
@@ -38,6 +34,13 @@ const Login = ({ onLoginSuccess }) => {
     } catch (err) {
       setResponseMsg(err.message);
     }
+  };
+
+  const handleSwitchFormType = () => {
+    setFormType(formType === "signup" ? "signin" : "signup");
+    setUsername(""); // Clear username field
+    setPassword(""); // Clear password field
+    setResponseMsg(""); // Clear any response message
   };
 
   return (
@@ -82,9 +85,7 @@ const Login = ({ onLoginSuccess }) => {
             : "Don't have an account?"}
           <button
             className="login-link-button"
-            onClick={() =>
-              setFormType(formType === "signup" ? "signin" : "signup")
-            }
+            onClick={handleSwitchFormType} // Call the new handler
           >
             Switch to {formType === "signup" ? "Sign In" : "Sign Up"}
           </button>
