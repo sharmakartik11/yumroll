@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh; /* Full viewport height */
-    background: #f4f6f8; /* Match Login page background */
+    background: #f4f6f8; /* Light gray background */
     color: #333; /* Darker text color for contrast */
     text-align: center;
   }
@@ -14,6 +14,21 @@
     font-weight: bold;
     margin-bottom: 30px;
     color: #333; /* Match Login heading color */
+  }
+  
+  .dashboard-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%; /* Adjust width as needed */
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  
+  .dashboard-left,
+  .dashboard-right {
+    flex: 1; /* Equal width for both sections */
+    margin: 0 10px; /* Add spacing between the two sections */
   }
   
   .logout-button {
