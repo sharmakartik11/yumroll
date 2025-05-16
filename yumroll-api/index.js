@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
+const User = require("./models/User");
 
 const app = express();
 const PORT = 5050;
@@ -25,16 +27,29 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-app.post("/api/signup", (req, res) => {
+app.post("/api/signup", async (req, res) => {
   const { username, password } = req.body;
 
-  // Simulate a successful signup
-  if (username && password) {
-    res.status(200).json({ message: "Signup successful!" });
-  } else {
-    res.status(400).json({ error: "Invalid input" });
+  try {
+    const existing = await User.findById(username);
+    if (existing) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      _id: username, // Set username as the _id
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: "Signup successful!" });
+  } catch (err) {
+    console.error("Signup error:", err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
+
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
