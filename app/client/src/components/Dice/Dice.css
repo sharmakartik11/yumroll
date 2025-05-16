@@ -23,7 +23,7 @@
     justify-content: center;
     font-size: 1.2rem;
     font-weight: bold;
-    background: #f4f6f8; /* Match page background */
+    background: white;
     border: 2px solid #ccc;
     border-radius: 15px; /* Rounded edges for dice faces */
   }
